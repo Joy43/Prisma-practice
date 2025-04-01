@@ -2,7 +2,7 @@ yarn add prisma ts-node @types/node -D
 npm install --save-dev typescript
 npx tsc --init
 npx prisma
-
+yarn add ts-node-dev --dev
 --------env
 database=DATABASE_URL="postgresql://postgres:postgres@localhost:5432/prisma_ssjoy?schema=public"
 ---------------------
@@ -35,3 +35,20 @@ model User {
 
 
 --------npx prisma migrate dev --name init
+yarn add @prisma/client
+npx prisma migrate reset
+npx prisma migrate dev
+yarn add -D nodemon
+
+"scripts": {
+  "dev": "nodemon --exec ts-node --transpile-only src/index.ts"
+}
+yarn dev
+
+npx prisma studio
+
+
+/------------------
+npx prisma migrate reset
+npx prisma migrate dev
+----------------------
