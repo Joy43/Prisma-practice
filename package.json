@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT","scripts": {
-  "dev": "nodemon --exec ts-node --transpile-only src/filtering.ts"
+  "dev": "nodemon --exec ts-node --transpile-only src/GroupBy.ts"
 }
 ,
   "devDependencies": {

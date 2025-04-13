@@ -6,6 +6,7 @@ yarn add ts-node-dev --dev
 --------env
 database=DATABASE_URL="postgresql://postgres:postgres@localhost:5432/prisma_ssjoy?schema=public"
 ---------------------
+https://github.com/Apollo-Level2-Web-Dev/PrismaMastery
 schema.prisma
 model Post {
   id        Int      @id @default(autoincrement())

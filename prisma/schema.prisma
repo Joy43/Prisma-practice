@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,58 +6,61 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-// -----------------post----------------
-model Post{
-  id Int @id @default(autoincrement())
-  title String
-  content String
-  published Boolean @default(false)
-  authorId Int
-  author User @relation(fields: [authorId],references:[id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+model Post {
+  id           Int            @id @default(autoincrement())
+  title        String
+  content      String
+  published    Boolean        @default(false)
+  authorId     Int
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
   postCategory PostCategory[]
+  author       User           @relation(fields: [authorId], references: [id])
+
   @@map("posts")
 }
 
-// --------user model-----------
-model User{
-  id Int @id @default(autoincrement())
-  username String @unique
-  email String
-  role UserRole @default(user)
-  profile Profile[] //one to one relation
- 
-  post Post[] //one to many
-   @@map("users")
-}
-// ----------------profile-----------
-model Profile{
-  id Int @id @default(autoincrement())
-  bio String?
-  userId Int @unique
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String
+  role     UserRole @default(user)
+  age      Int      @default(0)
+  post     Post[]
+  profile  Profile?
 
-user User @relation(fields: [userId],references: [id])
+  @@map("users")
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  userId Int     @unique
+  user   User    @relation(fields: [userId], references: [id])
 
   @@map("profiles")
+}
 
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String
+  postCategory PostCategory[]
+
+  @@map("categories")
 }
-// --------------category------------
-model Category{
-id Int @id @default(autoincrement())
-name String
-@@map("categories")
-}
-// ---------post Category----------
+
 model PostCategory {
-  postId Int
-  post  Post @relation(fields: [postId], references: [id])
+  postId     Int
   categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  post       Post     @relation(fields: [postId], references: [id])
+
   @@id([postId, categoryId])
   @@map("post_category")
 }
-// -----------user role-------------
-enum UserRole{
+
+enum UserRole {
   user
   admin
 }

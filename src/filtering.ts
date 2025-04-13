@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { userInfo } from "os";
 
 const prisma =new PrismaClient();
 const filtering=async()=>{
@@ -63,10 +64,21 @@ const filtering=async()=>{
                 }
             }
         });
+
+const userNameArray=['user1','user2','user3'];
+const userNamesByArray=await prisma.user.findMany({
+    where:{
+        username:{
+            in:userNameArray
+        }
+    }
+});
+console.log(userNamesByArray);
+
     //     console.log(startWith)
     // console.log(notFiltering)
     
-    console.log(endtWith);
+    // console.log(endtWith);
 
     }
   
